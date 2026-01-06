@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Marksheet System</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+        .form-group { margin-bottom: 15px; border: 1px solid #ddd; padding: 20px; border-radius: 5px; background: #f9f9f9; }
+        input { padding: 8px; margin: 5px; width: 200px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        th { background-color: #333; color: white; }
+        button { padding: 10px 20px; background-color: #28a745; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h2>Add Student Marks</h2>
+    <div class="form-group">
+        <form action="/submit" method="POST">
+            <input type="text" name="name" placeholder="Student Name" required>
+            <input type="text" name="class" placeholder="Class (e.g. 10th)" required>
+            <input type="number" name="roll" placeholder="Roll Number" required><br>
+            <input type="number" name="math" placeholder="Math Marks" required>
+            <input type="number" name="science" placeholder="Science Marks" required>
+            <input type="number" name="english" placeholder="English Marks" required><br><br>
+            <button type="submit">Save Record</button>
+        </form>
+    </div>
+
+    <h2>Stored Marksheets</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Class</th>
+                <th>Roll No</th>
+                <th>Math</th>
+                <th>Science</th>
+                <th>English</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in students %}
+            <tr>
+                <td>{{ s.student_name }}</td>
+                <td>{{ s.class }}</td>
+                <td>{{ s.roll_number }}</td>
+                <td>{{ s.math_marks }}</td>
+                <td>{{ s.science_marks }}</td>
+                <td>{{ s.english_marks }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

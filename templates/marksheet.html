@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Report Card - {{ student.student_name }}</title>
+    <style>
+        body { font-family: 'Times New Roman', serif; background: #555; padding: 50px; }
+        .marksheet { background: white; padding: 40px; width: 700px; margin: auto; border: 10px double #333; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        .header { text-align: center; border-bottom: 2px solid #333; margin-bottom: 20px; }
+        .info-table { width: 100%; margin-bottom: 20px; }
+        .marks-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .marks-table th, .marks-table td { border: 1px solid #333; padding: 10px; text-align: center; }
+        .footer { margin-top: 30px; display: flex; justify-content: space-between; font-weight: bold; }
+        .pass { color: green; } .fail { color: red; }
+        @media print { .no-print { display: none; } body { background: white; padding: 0; } .marksheet { box-shadow: none; border: 5px solid #333; } }
+    </style>
+</head>
+<body>
+    <div class="no-print" style="text-align: center; margin-bottom: 20px;">
+        <button onclick="window.print()" style="padding: 10px 20px; cursor: pointer;">Print Marksheet</button>
+        <a href="/" style="color: white; margin-left: 10px;">Back to Home</a>
+    </div>
+
+    <div class="marksheet">
+        <div class="header">
+            <h1>ACADEMIC REPORT CARD</h1>
+            <h3>Session 2025-2026</h3>
+        </div>
+
+        <table class="info-table">
+            <tr>
+                <td><strong>Name:</strong> {{ student.student_name }}</td>
+                <td><strong>Roll No:</strong> {{ student.roll_number }}</td>
+            </tr>
+            <tr>
+                <td><strong>Class:</strong> {{ student.class_name }}</td>
+                <td><strong>Status:</strong> 
+                    <span class="{{ 'pass' if percentage >= 40 else 'fail' }}">
+                        {{ 'PASSED' if percentage >= 40 else 'FAILED' }}
+                    </span>
+                </td>
+            </tr>
+        </table>
+
+        <table class="marks-table">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Max Marks</th>
+                    <th>Marks Obtained</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in marks %}
+                <tr>
+                    <td>{{ m.subject_name }}</td>
+                    <td>100</td>
+                    <td>{{ m.score }}</td>
+                    <td>{{ 'A' if m.score >= 80 else 'B' if m.score >= 60 else 'C' if m.score >= 40 else 'F' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr style="background: #eee; font-weight: bold;">
+                    <td>TOTAL</td>
+                    <td>{{ marks|length * 100 }}</td>
+                    <td>{{ total }}</td>
+                    <td>---</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div class="footer">
+            <div>Final Percentage: {{ percentage }}%</div>
+            <div>Overall Grade: {{ grade }}</div>
+        </div>
+        
+        <div style="margin-top: 50px; text-align: right;">
+            <p>___________________<br>Principal Signature</p>
+        </div>
+    </div>
+</body>
+</html>
